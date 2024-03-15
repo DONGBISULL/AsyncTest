@@ -41,10 +41,10 @@ java ThreadPool 생성하여 async 작업 처리
 
 생성 순서
 
-코어풀 사이즈 스레드 생성
--> 코어풀 사이즈를 넘치는 요청 워크큐(Oueue)에 담기
--> 워크큐 사이즈만큼 새로운 요청 담기
--> (워크큐에 지정한 사이즈만큼 요청이 쌓였을 경우) 맥시멈 풀 사이즈만큼 스레드 생성
+corePoolSize 만큼의 사이즈 스레드 생성
+-> corePoolSize 사이즈를 넘치는 요청 워크큐(Oueue)에 담기
+-> workQueue 사이즈만큼 새로운 요청 담기
+-> (workQueue에 지정한 사이즈만큼 요청이 쌓였을 경우) 맥시멈 풀 사이즈만큼 스레드 생성
 
 
 Core Pool Size 값을 크게 설정할 경우 Side Effect 고려
@@ -54,3 +54,13 @@ Core Pool Size 값을 크게 설정할 경우 Side Effect 고려
 -> 사용도를 잘 파악하여 설정 해야함
 
 
+# @Async
+1. method 접근지정자 private 사용 불가
+   - private면 프록시 객체에서 사용할 수 없어서 public 을 사용해야함 
+2. self-invocation(자가 호출) 불가 , inner method 사용 불가
+    - 자가 호출/inner method 의 경우 프록시가 접근하지 않기 때문에 사용할 수 없음 
+
+Async 빈을 프로시 객체로 Wrappering 을 함 => 프록시 객체화함 
+AOP로 만들어진 프록시로 객체화된 bean 참조
+
+=> async 제대로 작동하는지 무조건 테스트 해야함 !!
